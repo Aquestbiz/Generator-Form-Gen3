@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Website Prompt Generator V3</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap');
+        
+        :root {
+            --primary: #0f172a;
+            --accent: #64748b;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+
+        .header-font {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 1);
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 0.75rem;
+            transition: all 0.2s ease;
+            background: #fff;
+            font-size: 0.95rem;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #1e293b;
+            box-shadow: 0 0 0 4px rgba(30, 41, 59, 0.05);
+        }
+
+        .checkbox-card {
+            display: flex;
+            align-items: start;
+            gap: 0.75rem;
+            padding: 1.25rem;
+            border: 1.5px solid #f1f5f9;
+            border-radius: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: #fbfcfd;
+        }
+
+        .checkbox-card:hover {
+            border-color: #cbd5e1;
+            background: #fff;
+        }
+
+        .hidden-input {
+            display: none;
+            margin-top: 1rem;
+            padding-left: 0.5rem;
+            border-left: 2px solid #e2e8f0;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Custom Scrollbar for the Result area */
+        .custom-scroll::-webkit-scrollbar { width: 6px; }
+        .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+    </style>
+</head>
+<body class="min-h-screen py-10 px-4 md:px-8">
+
+    <div class="max-w-7xl mx-auto">
+        <header class="text-center mb-12">
+            <h1 class="header-font text-5xl md:text-6xl text-slate-900 mb-4">Wedding Prompt <span class="italic text-slate-500 font-normal">Gen V3</span></h1>
+            <p class="text-slate-500 max-w-2xl mx-auto font-medium">Buat instruksi AI yang komprehensif untuk website undangan mewah dengan fitur Kisah Cinta dan elemen interaktif lengkap.</p>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            <div class="lg:col-span-7 space-y-8">
+                <form id="weddingForm" class="glass-card p-6 md:p-10 space-y-10">
+                    
+                    <!-- Section: Core Data -->
+                    <section>
+                        <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center gap-3">
+                            <span class="bg-pink-100 text-pink-600 w-8 h-8 rounded-full flex items-center justify-center text-sm"><i class="fa-solid fa-heart"></i></span>
+                            Informasi Inti Pernikahan
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div>
+                                <label class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2 block">Nama Pengantin Pria</label>
+                                <input type="text" id="pria" class="input-field" placeholder="Raden Wijaya">
+                            </div>
+                            <div>
+                                <label class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2 block">Nama Pengantin Wanita</label>
+                                <input type="text" id="wanita" class="input-field" placeholder="Dyah Pitaloka">
+                            </div>
+                            <div>
+                                <label class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2 block">Tanggal Pernikahan</label>
+                                <input type="date" id="tanggal" class="input-field">
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2 block">Waktu Akad</label>
+                                    <input type="time" id="akad" class="input-field">
+                                </div>
+                                <div>
+                                    <label class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2 block">Waktu Resepsi</label>
+                                    <input type="time" id="resepsi" class="input-field">
+                                </div>
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2 block">Lokasi Resepsi</label>
+                                <textarea id="lokasi" rows="2" class="input-field" placeholder="Nama Gedung / Hotel, Alamat Lengkap..."></textarea>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Section: Aesthetics -->
+                    <section>
+                        <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center gap-3">
+                            <span class="bg-blue-100 text-blue-600 w-8 h-8 rounded-full flex items-center justify-center text-sm"><i class="fa-solid fa-palette"></i></span>
+                            Identitas Visual
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div>
+                                <label class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2 block">Warna Utama Website</label>
+                                <select id="warna" class="input-field">
+                                    <option value="Pink Rose">Pink Rose</option>
+                                    <option value="Sage Blue">Sage Blue</option>
+                                    <option value="Dusty Rose">Dusty Rose</option>
+                                    <option value="Night (Dark Elegant)">Night</option>
+                                    <option value="Champagne / Gold">Champagne / Gold</option>
+                                    <option value="Emerald Grey">Emerald Grey</option>
+                                    <option value="Gold">Gold</option>
+                                    <option value="Maroon">Maroon</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2 block">Gaya Visual</label>
+                                <select id="gaya" class="input-field">
+                                    <option value="Elegan">Elegan</option>
+                                    <option value="Kekinian">Kekinian</option>
+                                    <option value="Modern">Modern</option>
+                                    <option value="Classic / Tradisional">Classic / Tradisional</option>
+                                    <option value="Mewah">Mewah</option>
+                                    <option value="Mahal">Mahal</option>
+                                    <option value="Penuh Makna">Penuh Makna</option>
+                                    <option value="Arabic">Arabic</option>
+                                    <option value="Adat / Kultural">Adat / Kultural</option>
+                                    <option value="Dark mode / Moody">Dark mode / Moody</option>
+                                    <option value="Minimalis">Minimalis</option>
+                                </select>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Section: Features & Elements -->
+                    <section>
+                        <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center gap-3">
+                            <span class="bg-purple-100 text-purple-600 w-8 h-8 rounded-full flex items-center justify-center text-sm"><i class="fa-solid fa-layer-group"></i></span>
+                            Elemen & Fitur Interaktif
+                        </h3>
+                        <div class="space-y-4">
+                            
+                            <label class="checkbox-card">
+                                <input type="checkbox" id="checkTamu" class="mt-1">
+                                <div>
+                                    <span class="text-sm font-bold block">Integrasi Nama Tamu</span>
+                                    <span class="text-xs text-slate-400">Menyapa tamu secara personal melalui parameter URL.</span>
+                                </div>
+                            </label>
+
+                            <div class="checkbox-card flex-col">
+                                <label class="flex gap-3 w-full cursor-pointer">
+                                    <input type="checkbox" id="checkHero" onchange="toggle('checkHero', 'heroInp')">
+                                    <div>
+                                        <span class="text-sm font-bold block">Hero Image</span>
+                                        <span class="text-xs text-slate-400">Gambar pembuka website yang megah.</span>
+                                    </div>
+                                </label>
+                                <div id="heroInp" class="hidden-input w-full">
+                                    <input type="url" id="heroUrl" class="input-field text-sm" placeholder="Masukkan Link Foto Hero (JPG/PNG)">
+                                </div>
+                            </div>
+
+                            <label class="checkbox-card">
+                                <input type="checkbox" id="checkTimer">
+                                <div>
+                                    <span class="text-sm font-bold block">Countdown Timer</span>
+                                    <span class="text-xs text-slate-400">Hitung mundur otomatis ke hari pernikahan.</span>
+                                </div>
+                            </label>
+
+                            <label class="checkbox-card">
+                                <input type="checkbox" id="checkRSVP">
+                                <div>
+                                    <span class="text-sm font-bold block">RSVP Form</span>
+                                    <span class="text-xs text-slate-400">Konfirmasi kehadiran tamu secara digital.</span>
+                                </div>
+                            </label>
+
+                            <div class="checkbox-card flex-col">
+                                <label class="flex gap-3 w-full cursor-pointer">
+                                    <input type="checkbox" id="checkGaleri" onchange="toggle('checkGaleri', 'galeriInp')">
+                                    <div>
+                                        <span class="text-sm font-bold block">Galeri Foto (6 Foto)</span>
+                                        <span class="text-xs text-slate-400">Grid foto pre-wedding yang estetik.</span>
+                                    </div>
+                                </label>
+                                <div id="galeriInp" class="hidden-input w-full grid grid-cols-1 md:grid-cols-2 gap-2">
+                                    <input type="url" class="gal-item input-field text-xs" placeholder="Link Foto 1">
+                                    <input type="url" class="gal-item input-field text-xs" placeholder="Link Foto 2">
+                                    <input type="url" class="gal-item input-field text-xs" placeholder="Link Foto 3">
+                                    <input type="url" class="gal-item input-field text-xs" placeholder="Link Foto 4">
+                                    <input type="url" class="gal-item input-field text-xs" placeholder="Link Foto 5">
+                                    <input type="url" class="gal-item input-field text-xs" placeholder="Link Foto 6">
+                                </div>
+                            </div>
+
+                            <div class="checkbox-card flex-col">
+                                <label class="flex gap-3 w-full cursor-pointer">
+                                    <input type="checkbox" id="checkMusic" onchange="toggle('checkMusic', 'musicInp')">
+                                    <div>
+                                        <span class="text-sm font-bold block">Backsound Music</span>
+                                        <span class="text-xs text-slate-400">Musik latar otomatis (Auto-play).</span>
+                                    </div>
+                                </label>
+                                <div id="musicInp" class="hidden-input w-full">
+                                    <input type="url" id="musicUrl" class="input-field text-sm" placeholder="Masukkan Link File Audio (.mp3)">
+                                </div>
+                            </div>
+
+                            <label class="checkbox-card">
+                                <input type="checkbox" id="checkMaps">
+                                <div>
+                                    <span class="text-sm font-bold block">Google Maps Lokasi</span>
+                                    <span class="text-xs text-slate-400">Integrasi peta interaktif lokasi acara.</span>
+                                </div>
+                            </label>
+
+                            <div class="checkbox-card flex-col">
+                                <label class="flex gap-3 w-full cursor-pointer">
+                                    <input type="checkbox" id="checkGift" onchange="toggle('checkGift', 'giftInp')">
+                                    <div>
+                                        <span class="text-sm font-bold block">Wedding Gift (Amplop Digital)</span>
+                                        <span class="text-xs text-slate-400">Kirim kado pernikahan via transfer.</span>
+                                    </div>
+                                </label>
+                                <div id="giftInp" class="hidden-input w-full space-y-2">
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <input type="text" id="bankName" class="input-field text-sm" placeholder="Nama Bank">
+                                        <input type="text" id="bankAcc" class="input-field text-sm" placeholder="Nomor Rekening">
+                                    </div>
+                                    <input type="text" id="bankOwner" class="input-field text-sm" placeholder="Nama Pemilik Rekening">
+                                </div>
+                            </div>
+
+                            <div class="checkbox-card flex-col">
+                                <label class="flex gap-3 w-full cursor-pointer">
+                                    <input type="checkbox" id="checkStory" onchange="toggle('checkStory', 'storyInp')">
+                                    <div>
+                                        <span class="text-sm font-bold block">Kisah Cinta (Love Story)</span>
+                                        <span class="text-xs text-slate-400">Ceritakan perjalanan pertemuan kalian.</span>
+                                    </div>
+                                </label>
+                                <div id="storyInp" class="hidden-input w-full">
+                                    <textarea id="loveStory" rows="4" class="input-field text-sm" placeholder="Contoh: Kami pertama kali bertemu di sebuah perpustakaan kota..."></textarea>
+                                </div>
+                            </div>
+
+                            <div class="checkbox-card flex-col">
+                                <label class="flex gap-3 w-full cursor-pointer">
+                                    <input type="checkbox" id="checkWishes" onchange="toggle('checkWishes', 'wishInp')">
+                                    <div>
+                                        <span class="text-sm font-bold block">Kolom Ucapan Tamu</span>
+                                        <span class="text-xs text-slate-400">Buku tamu digital untuk doa dan harapan.</span>
+                                    </div>
+                                </label>
+                                <div id="wishInp" class="hidden-input w-full">
+                                    <input type="text" id="wishOpening" class="input-field text-sm" placeholder="Contoh: Berikan doa restu Anda untuk kami...">
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+
+                    <button type="button" onclick="generate()" class="w-full bg-slate-900 text-white py-5 rounded-2xl font-bold hover:bg-slate-800 transition transform hover:-translate-y-1 active:scale-95 shadow-xl">
+                        HASILKAN INSTRUKSI PROMPT <i class="fa-solid fa-wand-magic-sparkles ml-2"></i>
+                    </button>
+                </form>
+            </div>
+
+            <div class="lg:col-span-5 sticky top-10">
+                <div class="bg-slate-900 rounded-[2rem] p-8 shadow-2xl overflow-hidden border border-slate-800">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-white font-bold flex items-center gap-2">
+                            <span class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></span>
+                            Prompt Result
+                        </h2>
+                        <button onclick="copyToClipboard()" id="copyBtn" class="text-xs bg-white/10 text-white px-4 py-2 rounded-full hover:bg-white/20 transition flex items-center gap-2">
+                            <i class="fa-regular fa-copy"></i> Copy Prompt
+                        </button>
+                    </div>
+                    
+                    <div id="output" class="text-sm text-slate-400 leading-relaxed h-[650px] overflow-y-auto font-mono whitespace-pre-wrap bg-black/30 p-6 rounded-2xl border border-white/5 custom-scroll">
+Lengkapi formulir di samping untuk menghasilkan prompt yang dioptimalkan untuk AI. 
+
+Instruksi ini akan menyuruh AI untuk berperan sebagai Senior Frontend Developer dalam membangun website undangan pernikahan Anda.
+                    </div>
+
+                    <div class="mt-6 flex items-start gap-3 bg-white/5 p-4 rounded-xl">
+                        <i class="fa-solid fa-circle-info text-blue-400 mt-1"></i>
+                        <p class="text-[11px] text-slate-500 italic">Gunakan prompt ini pada ChatGPT (GPT-4), Claude 3, atau Gemini Advanced untuk hasil source code terbaik dalam satu file HTML.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function toggle(chkId, inpId) {
+            const checkbox = document.getElementById(chkId);
+            const div = document.getElementById(inpId);
+            div.style.display = checkbox.checked ? 'block' : 'none';
+        }
+
+        function generate() {
+            const pria = document.getElementById('pria').value || '[Nama Pria]';
+            const wanita = document.getElementById('wanita').value || '[Nama Wanita]';
+            const tgl = document.getElementById('tanggal').value || '[Tanggal]';
+            const akad = document.getElementById('akad').value || '[Waktu Akad]';
+            const resepsi = document.getElementById('resepsi').value || '[Waktu Resepsi]';
+            const lokasi = document.getElementById('lokasi').value || '[Lokasi Acara]';
+            const warna = document.getElementById('warna').value;
+            const gaya = document.getElementById('gaya').value;
+
+            let elements = [];
+
+            if(document.getElementById('checkTamu').checked) 
+                elements.push("- Integrasi Nama Tamu: Tambahkan fungsi JS untuk mengambil parameter 'to' dari URL dan menampilkannya di landing page.");
+            
+            if(document.getElementById('checkHero').checked) {
+                const url = document.getElementById('heroUrl').value || '[Link Foto Hero]';
+                elements.push(`- Hero Section: Tampilkan foto utama (${url}) dengan efek visual premium dan overlay teks nama pengantin.`);
+            }
+
+            if(document.getElementById('checkTimer').checked)
+                elements.push(`- Countdown Timer: Hitung mundur presisi menuju tanggal ${tgl}.`);
+
+            if(document.getElementById('checkRSVP').checked)
+                elements.push("- RSVP Form: Sediakan form konfirmasi kehadiran yang interaktif.");
+
+            if(document.getElementById('checkGaleri').checked) {
+                const galLinks = Array.from(document.querySelectorAll('.gal-item')).map(i => i.value).filter(v => v !== "");
+                elements.push(`- Galeri Foto: Buat layout masonry/grid elegan untuk foto berikut: ${galLinks.length > 0 ? galLinks.join(', ') : '[6 Link Foto Pre-wedding]'}.`);
+            }
+
+            if(document.getElementById('checkMusic').checked) {
+                const mUrl = document.getElementById('musicUrl').value || '[Link File MP3]';
+                elements.push(`- Backsound: Integrasikan audio player otomatis dari link ${mUrl} dengan kontrol volume yang estetik.`);
+            }
+
+            if(document.getElementById('checkMaps').checked)
+                elements.push("- Google Maps: Tambahkan peta interaktif atau tombol navigasi langsung ke lokasi acara.");
+
+            if(document.getElementById('checkGift').checked) {
+                const b = document.getElementById('bankName').value || '[Bank]';
+                const n = document.getElementById('bankAcc').value || '[No Rek]';
+                const o = document.getElementById('bankOwner').value || '[Atas Nama]';
+                elements.push(`- Wedding Gift: Sediakan section kado digital untuk Bank ${b}, Rekening: ${n} a.n ${o}. Tambahkan fitur 'Klik untuk Salin'.`);
+            }
+
+            if(document.getElementById('checkStory').checked) {
+                const story = document.getElementById('loveStory').value || '[Teks Cerita Cinta]';
+                elements.push(`- Kisah Cinta: Buat section timeline atau narasi romantis dengan konten berikut: "${story}".`);
+            }
+
+            if(document.getElementById('checkWishes').checked) {
+                const open = document.getElementById('wishOpening').value || 'Tinggalkan pesan untuk kami...';
+                elements.push(`- Kolom Ucapan: Sediakan area bagi tamu untuk mengirim ucapan dengan kalimat pembuka "${open}".`);
+            }
+
+            const promptText = `Saya ingin kamu bertindak sebagai seorang frontend developer profesional yang membuat website undangan pernikahan digital premium. 
+
+Website ini harus memiliki desain yang modern, elegan, dan sepenuhnya responsif (mobile-first). Gunakan efek animasi halus saat scroll, parallax ringan, serta transisi yang lembut agar terasa "Mahal".
+
+--- SPESIFIKASI DATA ---
+- Pasangan: ${pria} & ${wanita}
+- Tanggal Acara: ${tgl}
+- Waktu Akad: ${akad} WIB
+- Waktu Resepsi: ${resepsi} WIB
+- Lokasi Utama: ${lokasi}
+
+--- IDENTITAS VISUAL ---
+- Tema Warna: ${warna}
+- Gaya Visual: ${gaya}
+- Mood: Mewah, Intim, dan Artistik.
+- Tipografi: Gunakan kombinasi Serif elegan untuk judul dan Sans-Serif bersih untuk konten.
+
+--- FITUR WAJIB ---
+${elements.join('\n')}
+
+--- INSTRUKSI TEKNIS ---
+1. Gunakan HTML5, Tailwind CSS, dan JavaScript murni (Vanilla JS).
+2. Pastikan semua kode disatukan dalam SATU FILE HTML saja agar mudah di-copy-paste.
+3. Gunakan animasi CSS (seperti fade-in-up) pada setiap section saat di-scroll.
+4. Hindari desain yang generik; buatlah setiap bagian terasa eksklusif dan emosional.
+5. Pastikan layout sangat nyaman dibuka melalui smartphone (Mobile Optimized).
+
+Berikan kode lengkapnya dalam satu blok kode sekarang.`;
+
+            document.getElementById('output').innerText = promptText;
+            
+            // Auto scroll to preview on small screens
+            if(window.innerWidth < 1024) {
+                document.getElementById('output').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function copyToClipboard() {
+            const content = document.getElementById('output').innerText;
+            const btn = document.getElementById('copyBtn');
+            const el = document.createElement('textarea');
+            el.value = content;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+
+            btn.innerHTML = '<i class="fa-solid fa-check text-green-400"></i> Copied!';
+            setTimeout(() => {
+                btn.innerHTML = '<i class="fa-regular fa-copy"></i> Copy Prompt';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
